@@ -1,0 +1,35 @@
+CREATE DATABASE bankdb;
+USE bankdb;
+
+
+CREATE TABLE users (
+user_id INT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50) UNIQUE,
+password_hash VARCHAR(255),
+role ENUM('ADMIN','EMPLOYEE','CUSTOMER')
+);
+
+
+CREATE TABLE customers (
+customer_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50),
+city VARCHAR(50)
+);
+
+
+CREATE TABLE accounts (
+account_id INT PRIMARY KEY AUTO_INCREMENT,
+customer_id INT,
+balance DECIMAL(10,2),
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+
+CREATE TABLE transactions (
+transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+account_id INT,
+type VARCHAR(20),
+amount DECIMAL(10,2),
+tdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+);
